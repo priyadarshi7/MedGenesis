@@ -13,6 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Marketplace', 'Insurance', 'AI Agent', 'FAQs'];
@@ -20,6 +21,8 @@ const navItems = ['Home', 'Marketplace', 'Insurance', 'AI Agent', 'FAQs'];
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const {loginWithRedirect, isAuthenticated, logout} = useAuth0();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -77,9 +80,13 @@ function Navbar(props) {
                 {item}
               </Button>
             ))}
-            <Button sx={{ marginLeft:"10px",color: "white",backgroundColor:"#5F1EE6", textTransform:"none", fontWeight: 600, borderRadius:"8px", padding:"5px 10px" }}>
-              Login
-            </Button>
+            { isAuthenticated? <Button  onClick={logout} sx={{ marginLeft:"10px",color: "white",backgroundColor:"#5F1EE6", textTransform:"none", fontWeight: 600, borderRadius:"8px", padding:"5px 10px" }}>
+              Logout
+            </Button> :
+          <Button onClick={loginWithRedirect} sx={{ marginLeft:"10px",color: "white",backgroundColor:"#5F1EE6", textTransform:"none", fontWeight: 600, borderRadius:"8px", padding:"5px 10px" }}>
+            Login
+          </Button>
+            }
           </Box>
         </Toolbar>
       </AppBar>

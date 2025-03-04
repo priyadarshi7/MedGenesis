@@ -56,7 +56,7 @@
   }
   
   /* Feature card */
-  .feature-card {
+  .section3-feature-card {
     background-color: white;
     padding: 40px 32px;
     border-radius: 16px;
@@ -71,7 +71,7 @@
     z-index: 1;
   }
   
-  .feature-card::before {
+  .section3-feature-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -82,7 +82,7 @@
     z-index: -1;
   }
   
-  .feature-card:hover {
+  .section3-feature-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   }
@@ -100,7 +100,7 @@
     transition: all 0.3s ease;
   }
   
-  .feature-card:hover .icon-container {
+  .section3-feature-card:hover .icon-container {
     background: linear-gradient(135deg, #7e57c2 0%, #5e35b1 100%);
     color: white;
   }

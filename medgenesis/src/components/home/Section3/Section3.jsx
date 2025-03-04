@@ -4,7 +4,7 @@ import './Section3.css';
 
 function FeatureCard({ icon: Icon, title, description }) {
   return (
-    <div className="feature-card">
+    <div className="section3-feature-card">
       <div className="icon-container">
         <Icon size={42} strokeWidth={1.5} />
       </div>
