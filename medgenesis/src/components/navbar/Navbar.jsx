@@ -17,7 +17,7 @@ import Button from '@mui/material/Button';
 const drawerWidth = 240;
 const navItems = ['Home', 'Marketplace', 'Insurance', 'AI Agent', 'FAQs'];
 
-function DrawerAppBar(props) {
+function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -48,9 +48,9 @@ function DrawerAppBar(props) {
   const [active, setActive] = React.useState('Home');
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', position:"fixed", zIndex:1200 }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{background:"transparent", color: "black"}}>
+      <AppBar component="nav" sx={{background:"white", color: "black"}}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -64,7 +64,7 @@ function DrawerAppBar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textTransform:"none", fontWeight: 600 }}
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textTransform:"none", fontWeight: 900, fontFamily:"Oswald" }}
           >
             MedGenesis
           </Typography>
@@ -107,4 +107,4 @@ function DrawerAppBar(props) {
   );
 }
 
-export default DrawerAppBar;
+export default Navbar;

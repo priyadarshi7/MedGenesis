@@ -1,0 +1,11 @@
+@font-face {
+    font-family: Oswald;
+    src: url('./assets/fonts/Oswald-VariableFont_wght.ttf');
+}
+
+*{
+    box-sizing: border-box;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
