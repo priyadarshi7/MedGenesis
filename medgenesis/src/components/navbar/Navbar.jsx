@@ -22,7 +22,7 @@ function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const {loginWithRedirect, isAuthenticated, logout} = useAuth0();
+  const {loginWithRedirect, isAuthenticated, logout, user} = useAuth0();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -80,8 +80,8 @@ function Navbar(props) {
                 {item}
               </Button>
             ))}
-            { isAuthenticated? <Button  onClick={logout} sx={{ marginLeft:"10px",color: "white",backgroundColor:"#5F1EE6", textTransform:"none", fontWeight: 600, borderRadius:"8px", padding:"5px 10px" }}>
-              Logout
+            { isAuthenticated? <Button  onClick={logout} sx={{ marginLeft:"10px"  }}>
+              <img src={user.picture} height="40px" width="40px" style={{borderRadius:"25px"}}/>
             </Button> :
           <Button onClick={loginWithRedirect} sx={{ marginLeft:"10px",color: "white",backgroundColor:"#5F1EE6", textTransform:"none", fontWeight: 600, borderRadius:"8px", padding:"5px 10px" }}>
             Login
