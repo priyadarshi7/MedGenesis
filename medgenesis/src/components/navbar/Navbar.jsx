@@ -15,46 +15,25 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useAuth0 } from "@auth0/auth0-react";
 import {NavLink} from "react-router-dom"
-
-// Import Zustand store
-import useAuthStore from '../../store/authStore';
+import { useAuthStore } from '../../store/authStore';
 
 const drawerWidth = 240;
-const navItems = ['Marketplace', 'Insurance', 'AI Agent', 'FAQs'];
+const navItems = ['Insurance', 'AI Agent', 'FAQs'];
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  
-  const { loginWithRedirect, isAuthenticated, logout, user } = useAuth0();
-  const { createUser, clearUser, user: storedUser } = useAuthStore();
 
+  const {isAuthenticated} = useAuthStore();
+  
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
-  };
-
-  // Save user data in Zustand store after login
-  React.useEffect(() => {
-    if (isAuthenticated && user) {
-      const userData = {
-        auth0Id: user.sub,
-        email: user.email,
-        picture: user.picture,
-      };
-      createUser(userData); // Store user in MongoDB and Zustand
-    }
-  }, [isAuthenticated, user, createUser]);
-
-  // Handle logout and clear Zustand store
-  const handleLogout = () => {
-    logout({ returnTo: window.location.origin });
-    clearUser(); // Clear Zustand store
   };
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-      <span style={{color:"#4a18b8"}}>Med</span>Genesis
+      <NavLink to="/"><span style={{color:"#4a18b8"}}>Med</span>Genesis</NavLink>
       </Typography>
       <Divider />
       <List>
@@ -99,7 +78,7 @@ function Navbar(props) {
               fontFamily: "Oswald"
             }}
           >
-            <span style={{color:"#4a18b8"}}>Med</span>Genesis
+           <NavLink to="/"><span style={{color:"#4a18b8"}}>Med</span>Genesis</NavLink> 
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
@@ -123,18 +102,12 @@ function Navbar(props) {
 
             {/* Authentication Buttons */}
             {isAuthenticated ? (
-              <NavLink to={`/profile/${user?.sub}`}><Button  sx={{ marginLeft: "10px" }}>
-                <img
-                  src={user.picture}
-                  height="40px"
-                  width="40px"
-                  style={{ borderRadius: "25px" }}
-                  alt="User"
-                />
+              <NavLink to="/profile"><Button  sx={{ marginLeft: "10px" }}>
+              Profile
               </Button></NavLink>
             ) : (
+              <NavLink to="/login">
               <Button
-                onClick={loginWithRedirect}
                 sx={{
                   marginLeft: "10px",
                   color: "white",
@@ -150,6 +123,7 @@ function Navbar(props) {
               >
                 Login
               </Button>
+              </NavLink>
             )}
           </Box>
         </Toolbar>

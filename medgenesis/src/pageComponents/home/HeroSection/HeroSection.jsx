@@ -2,13 +2,13 @@ import React from 'react';
 import './HeroSection.css';
 import { Button } from '@mui/material';
 import { ChevronRight, Shield, Database } from 'lucide-react';
-import Navbar from '../../navbar/Navbar';
-import { Vortex } from '../../ui/vortex';
+import { Vortex } from '../../../components/ui/vortex';
 import { color } from 'motion/react';
+import { WavyBackground } from '../../../components/ui/wavy-background';
 
 export default function HeroSection() {
   return (
-    <Vortex>
+   <WavyBackground>
     <div>
         <div className="home-hero-section">
             <div className="floating-elements">
@@ -51,6 +51,6 @@ export default function HeroSection() {
             </div>            
         </div>
     </div>
-    </Vortex>
+    </WavyBackground>
   )
 }
