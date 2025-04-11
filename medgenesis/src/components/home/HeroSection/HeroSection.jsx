@@ -3,9 +3,12 @@ import './HeroSection.css';
 import { Button } from '@mui/material';
 import { ChevronRight, Shield, Database } from 'lucide-react';
 import Navbar from '../../navbar/Navbar';
+import { Vortex } from '../../ui/vortex';
+import { color } from 'motion/react';
 
 export default function HeroSection() {
   return (
+    <Vortex>
     <div>
         <div className="home-hero-section">
             <div className="floating-elements">
@@ -15,10 +18,10 @@ export default function HeroSection() {
                 <div className="tech-element tech-2"></div>
             </div>
             <div className="home-hero-section-box1">
-                <div className="home-hero-section-text-1">
+                <div className="home-hero-section-text-1" style={{color:'white'}}>
                     All Your <span>Medical Records</span> in One Safe Place
                 </div>
-                <div className="home-hero-section-box1-desc">
+                <div className="home-hero-section-box1-desc" style={{color:'white'}}>
                     Securely store, access, and share your medical history with our blockchain-powered platform. 
                     Experience the future of healthcare data management with end-to-end encryption and complete 
                     control over your sensitive information.
@@ -48,5 +51,6 @@ export default function HeroSection() {
             </div>            
         </div>
     </div>
+    </Vortex>
   )
 }

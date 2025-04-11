@@ -14,24 +14,47 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useAuth0 } from "@auth0/auth0-react";
+import {NavLink} from "react-router-dom"
+
+// Import Zustand store
+import useAuthStore from '../../store/authStore';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Marketplace', 'Insurance', 'AI Agent', 'FAQs'];
+const navItems = ['Marketplace', 'Insurance', 'AI Agent', 'FAQs'];
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const {loginWithRedirect, isAuthenticated, logout, user} = useAuth0();
+  
+  const { loginWithRedirect, isAuthenticated, logout, user } = useAuth0();
+  const { createUser, clearUser, user: storedUser } = useAuthStore();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  // Save user data in Zustand store after login
+  React.useEffect(() => {
+    if (isAuthenticated && user) {
+      const userData = {
+        auth0Id: user.sub,
+        email: user.email,
+        picture: user.picture,
+      };
+      createUser(userData); // Store user in MongoDB and Zustand
+    }
+  }, [isAuthenticated, user, createUser]);
+
+  // Handle logout and clear Zustand store
+  const handleLogout = () => {
+    logout({ returnTo: window.location.origin });
+    clearUser(); // Clear Zustand store
+  };
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MedGenesis
+      <span style={{color:"#4a18b8"}}>Med</span>Genesis
       </Typography>
       <Divider />
       <List>
@@ -47,13 +70,14 @@ function Navbar(props) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
-  
+
   const [active, setActive] = React.useState('Home');
 
   return (
-    <Box sx={{ display: 'flex', position:"fixed", zIndex:1200 }}>
+    <Box sx={{ display: 'flex', position: "fixed", zIndex: 1200, width: "100%" }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{background:"white", color: "black"}}>
+      <AppBar component="nav" sx={{     backgroundColor: "rgba(0, 0, 0, 0.6)",
+    backdropFilter: "blur(10px)", color: "white" }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -67,26 +91,66 @@ function Navbar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textTransform:"none", fontWeight: 900, fontFamily:"Oswald" }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', sm: 'block' },
+              textTransform: "none",
+              fontWeight: 900,
+              fontFamily: "Oswald"
+            }}
           >
-            MedGenesis
+            <span style={{color:"#4a18b8"}}>Med</span>Genesis
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: "black", textTransform:"none", fontWeight: 600, 
-                borderBottom: active===item?'2px solid black':'' }}
-                onClick={()=>setActive(item)}
+              <Button 
+                key={item} 
+                sx={{
+                  color: "white", 
+                  textTransform: "none", 
+                  fontWeight: 600, 
+                  borderBottom: active === item ? '2px solid black' : '',
+                  '&:hover': {
+                    backgroundColor: '#f5f5f5',
+                    color:"black"
+                  }
+                }}
+                onClick={() => setActive(item)}
               >
                 {item}
               </Button>
             ))}
-            { isAuthenticated? <Button  onClick={logout} sx={{ marginLeft:"10px"  }}>
-              <img src={user.picture} height="40px" width="40px" style={{borderRadius:"25px"}}/>
-            </Button> :
-          <Button onClick={loginWithRedirect} sx={{ marginLeft:"10px",color: "white",backgroundColor:"#5F1EE6", textTransform:"none", fontWeight: 600, borderRadius:"8px", padding:"5px 10px" }}>
-            Login
-          </Button>
-            }
+
+            {/* Authentication Buttons */}
+            {isAuthenticated ? (
+              <NavLink to={`/profile/${user?.sub}`}><Button  sx={{ marginLeft: "10px" }}>
+                <img
+                  src={user.picture}
+                  height="40px"
+                  width="40px"
+                  style={{ borderRadius: "25px" }}
+                  alt="User"
+                />
+              </Button></NavLink>
+            ) : (
+              <Button
+                onClick={loginWithRedirect}
+                sx={{
+                  marginLeft: "10px",
+                  color: "white",
+                  backgroundColor: "#5F1EE6",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  padding: "5px 10px",
+                  '&:hover': {
+                    backgroundColor: "#4e1bb4",
+                  }
+                }}
+              >
+                Login
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
