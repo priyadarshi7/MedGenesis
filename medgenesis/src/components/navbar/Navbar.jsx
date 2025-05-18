@@ -53,9 +53,9 @@ function Navbar(props) {
   const [active, setActive] = React.useState('Home');
 
   return (
-    <Box sx={{ display: 'flex', position: "fixed", zIndex: 1200, width: "100%" }}>
+    <Box sx={{ display: 'flex', zIndex: 1200, width: "100%", height:"60px" }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{     backgroundColor: "rgba(0, 0, 0, 0.6)",
+      <AppBar component="nav" sx={{ backgroundColor: "rgb(0, 0, 0)",
     backdropFilter: "blur(10px)", color: "white" }}>
         <Toolbar>
           <IconButton
@@ -99,12 +99,28 @@ function Navbar(props) {
                 {item}
               </Button>
             ))}
-
             {/* Authentication Buttons */}
             {isAuthenticated ? (
-              <NavLink to="/profile"><Button  sx={{ marginLeft: "10px" }}>
+              <>
+              <NavLink to="/profile"><Button  sx={{  color: "white", 
+                  textTransform: "none", 
+                  fontWeight: "600",
+                       '&:hover': {
+                    backgroundColor: '#f5f5f5',
+                    color:"black"
+                  } }}>
               Profile
               </Button></NavLink>
+                <NavLink to="/blockchain"><Button  sx={{  color: "white", 
+                  textTransform: "none", 
+                  fontWeight: "600",
+                       '&:hover': {
+                    backgroundColor: '#f5f5f5',
+                    color:"black"
+                  } }}>
+              Secured Data
+              </Button></NavLink>
+              </>
             ) : (
               <NavLink to="/login">
               <Button

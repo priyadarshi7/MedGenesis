@@ -27,6 +27,34 @@ const userSchema = new mongoose.Schema(
 		resetPasswordExpiresAt: Date,
 		verificationToken: String,
 		verificationTokenExpiresAt: Date,
+		//Personal
+		personal: {
+			gender: {
+			  type: String,
+			  enum: ["Male", "Female", "Other"],
+			},
+			dob: {
+			  type: Date,
+			},
+			contact: {
+			  type: Number,
+			},
+			city: String,
+			state: String,
+		  },
+		  //General Health Info
+		  general: {
+			bloodgroup: String,
+			height: Number, 
+			weight: Number, 
+			bmi: Number, 
+			bloodpressure: String,
+			heartrate: String,
+			allergies: {
+			  type: [String],
+			  default: [],
+			},
+		  },
 	},
 	{ timestamps: true }
 );
